@@ -11,12 +11,12 @@ import { Navigation, Autoplay } from 'swiper/modules';
 
 export default function Painel() {
     const swiperRef = useRef<any>(null);
-    const [activeIndex, setActiveIndex] = useState(0); // Estado para armazenar o índice ativo
+    const [activeIndex, setActiveIndex] = useState(0);
 
     const goToSlide = (index: number) => {
         if (swiperRef.current) {
             swiperRef.current.swiper.slideTo(index);
-            setActiveIndex(index); // Atualiza o índice ativo ao mudar de slide
+            setActiveIndex(index); 
         }
     };
 
@@ -39,7 +39,7 @@ export default function Painel() {
                         modules={[Navigation, Autoplay]}
                         className="mySwiper rounded-[100%] max-w-[300px]"
                         autoplay={{ delay: 3000, disableOnInteraction: false }}
-                        onSlideChange={handleSlideChange} // Adiciona o evento para mudança de slide
+                        onSlideChange={handleSlideChange}
                     >
                         <SwiperSlide>
                             <img src={plataforma1} alt="Slide 1" className='h-[300px] object-cover' />
