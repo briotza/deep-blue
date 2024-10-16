@@ -3,8 +3,14 @@ import email from "../../assets/email.png"
 import password from "../../assets/password.png"
 import google from "../../assets/google.png"
 import facebook from "../../assets/facebook.png"
+import { Link } from "react-router-dom"
 
-export default function Formulario() {
+
+interface SignupProps {
+    onSwitchForm: () => void;
+}
+
+export default function Signup({ onSwitchForm }: SignupProps) {
     return (
         <div className="bg-white w-[50%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 max-w-[64%]">
@@ -65,7 +71,7 @@ export default function Formulario() {
                 <button className="flex items-center rounded-xl border py-5 px-8"><img src={facebook} className="mr-1"/>Facebook</button>
             </div>
 
-            <span className="text-sm mt-8">Already have an account? <button><b>Log In</b></button></span>
+            <span className="text-sm mt-8">Already have an account? <button onClick={onSwitchForm}><b>Log In</b></button></span>
         </div>
     )
 }
