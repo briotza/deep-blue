@@ -6,7 +6,7 @@ import Email from "../../components/home/email";
 import { useState } from "react";
 
 export default function Home() {
-    const [currentForm, setCurrentForm] = useState("login");
+    const [currentForm, setCurrentForm] = useState("signup");
 
     const handleSwitchToSignup = () => setCurrentForm("signup")
     const handleSwitchToLogin = () => setCurrentForm("login")
