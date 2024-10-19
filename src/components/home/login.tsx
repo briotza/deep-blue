@@ -48,7 +48,7 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
                     <button className="ml-auto text-xs text-[#150050] font-bold"  onClick={onForgotPassword}>Forgot Password?</button>
                 </div>
 
-                <button className="w-[100%] bg-[#150050] text-white rounded-xl border h-12">Sign In</button>
+                <Link to='/dashboard'><button className="mt-2 w-[100%] bg-[#150050] text-white rounded-xl border h-12">Sign In</button></Link>
 
             </form>
             <div className="flex flex-row w-[100%] items-center justify-center my-8">

@@ -57,7 +57,7 @@ export default function Signup({ onSwitchForm }: SignupProps) {
                     & Conditions</b></button> and our <button><b>Privacy Policy</b></button></span>
                 </div>
 
-                <button className="w-[100%] bg-[#150050] text-white rounded-xl border h-12">Sign Up</button>
+                <Link to='/dashboard'><button className="w-[100%] bg-[#150050] text-white rounded-xl border h-12 mt-2">Sign Up</button></Link>
 
             </form>
             <div className="flex flex-row w-[100%] items-center justify-center my-8">
