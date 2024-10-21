@@ -12,4 +12,5 @@ O frontend do DeepBlue foi desenvolvido utilizando as seguintes tecnologias:
 - Tailwind
 - Vite
 
-## Este repositório de frontend faz parte do projeto DeepBlue, desenvolvido como parte da composição da nota da matéria UPX V da FACENS. O projeto foi realizado pelos alunos Ciano Meliunas, Hillary Ferreira, Lincoln Barsotti e Vitor Guimarães.
+--
+Este repositório de frontend faz parte do projeto DeepBlue, desenvolvido como parte da composição da nota da matéria UPX V da FACENS. O projeto foi realizado pelos alunos Ciano Meliunas, Hillary Ferreira, Lincoln Barsotti e Vitor Guimarães.
