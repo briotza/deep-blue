@@ -1,50 +1,15 @@
-# React + TypeScript + Vite
+# Deep Blue - Frontend (Em construção)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O projeto DeepBlue é uma plataforma avançada voltada para grandes empresas do setor petrolífero, com foco no monitoramento de incidentes ambientais e acidentes de trabalho em plataformas offshore. A plataforma visa transformar dados complexos em informações acessíveis e acionáveis, através de um dashboard dinâmico e interativo.
+A solução é projetada para otimizar práticas de ESG (Governança Ambiental, Social e Corporativa), com insights que ajudam a reduzir impactos ambientais e operacionais, oferecendo às empresas uma abordagem proativa na gestão de riscos.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+O frontend do DeepBlue foi desenvolvido utilizando as seguintes tecnologias:
+- React.js
+- Typescript
+- Tailwind
+- Vite
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Este repositório de frontend faz parte do projeto DeepBlue, desenvolvido como parte da composição da nota da matéria UPX V da FACENS. O projeto foi realizado pelos alunos Ciano Meliunas, Hillary Ferreira, Lincoln Barsotti e Vitor Guimarães.
