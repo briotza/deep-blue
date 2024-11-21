@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const BarChart: React.FC = () => {
+const Ambiental: React.FC = () => {
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
@@ -26,7 +26,7 @@ const BarChart: React.FC = () => {
       },
       title: {
         display: true,
-        text: 'Activity',
+        text: 'Incidentes Ambientais',
       },
     },
   };
@@ -34,4 +34,4 @@ const BarChart: React.FC = () => {
   return <Bar data={data} options={options} />;
 };
 
-export default BarChart;
+export default Ambiental;

@@ -16,17 +16,17 @@ export default function Sidebar() {
                 <div className='flex flex-col border-b-2 space-y-4 items-start pb-4'>
                     <h4 className='font-bold'>MENU</h4>
                     <button className='flex flex-row items-center'><img src={grid} className='mr-4'/>Dashboard</button>
-                    <button className='flex flex-row items-center'><img src={square} className='mr-4' />My Tasks</button>
-                    <button className='flex flex-row items-center'><img src={message} className='mr-4' />Message</button>
-                    <button className='flex flex-row items-center'><img src={trophy} className='mr-4' />Goals</button>
+                    <button className='flex flex-row items-center'><img src={square} className='mr-4' />Monitoramento de Incidentes</button>
+                    <button className='flex flex-row items-center'><img src={message} className='mr-4' />Previsão e Análise Preditiva</button>
+                    <button className='flex flex-row items-center'><img src={trophy} className='mr-4' />Relatórios e Estatísticas</button>
                 </div>
                 <div className='flex flex-col space-y-4 items-start relative'>
                     <div className='flex flex-row'>
                         <h4 className='font-bold'>ATIVIDADES</h4>
                     </div>
-                    <button className='flex flex-row items-center'><div className='bg-[#6366F1] rounded-full w-3 h-3 mr-6'></div> Website Design</button>
-                    <button className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> SEO Analythics</button>
-                    <button className='flex flex-row items-center'><div className='bg-[#34D399] rounded-full w-3 h-3 mr-6'></div> Hiphonic App</button>
+                    <button className='flex flex-row items-center'><div className='bg-[#6366F1] rounded-full w-3 h-3 mr-6'></div> Registrar Incidente</button>
+                    <button className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> Relatório de Custos</button>
+                    <button className='flex flex-row items-center'><div className='bg-[#34D399] rounded-full w-3 h-3 mr-6'></div> Enviar Notificação</button>
 
                 </div>
                 <footer className='absolute bottom-8'>

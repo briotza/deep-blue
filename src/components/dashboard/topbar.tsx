@@ -17,7 +17,7 @@ export default function Topbar() {
             </div>
             <div className='ml-3 pr-16'>
                     <p className='font-bold'>Username</p>
-                    <p>Cargo</p>
+                    <p>Plataforma</p>
                 </div>
         </div>
     )
