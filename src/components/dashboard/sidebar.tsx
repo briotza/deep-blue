@@ -16,7 +16,7 @@ export default function Sidebar() {
             <div className='p-6 space-y-4'>
                 <div className='flex flex-col border-b-2 space-y-4 items-start pb-4'>
                     <h4 className='font-bold'>MENU</h4>
-                    <button className='flex flex-row items-center'><img src={grid} className='mr-4'/>Dashboard</button>
+                    <Link to="/dashboard" className='flex flex-row items-center'><img src={grid} className='mr-4'/>Dashboard</Link>
                     <Link to="/incidentes" className='flex flex-row items-center'><img src={square} className='mr-4' />Monitoramento de Incidentes</Link>
                     <button className='flex flex-row items-center'><img src={message} className='mr-4' />Previsão e Análise Preditiva</button>
                     <button className='flex flex-row items-center'><img src={trophy} className='mr-4' />Relatórios e Estatísticas</button>
