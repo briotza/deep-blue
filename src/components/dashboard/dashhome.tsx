@@ -1,83 +1,125 @@
+import React, { useState, useEffect } from 'react';
 import Ambiental from "./ambiental";
-import Seguranca from "./seguranca"
-import Calendar from 'react-calendar';
-import React, { useState } from 'react';
-import image from '../../assets/image.png'
-import username from '../../assets/username.png'
+import Seguranca from "./seguranca";
 import Clima from "./clima";
+import { incidentes } from "../data/index";
+
+// Função para calcular a quantidade de incidentes nos últimos 30 dias
+const incidentesRecentes = (tipo: string, incidentes: any[]) => {
+  const hoje = new Date();
+  const trintaDiasAtras = new Date();
+  trintaDiasAtras.setDate(hoje.getDate() - 30);
+
+  // Filtra os incidentes do tipo e dentro do período de 30 dias
+  return incidentes.filter((incidente) => {
+    const dataIncidente = new Date(incidente.data);
+    return incidente.tipo === tipo && dataIncidente >= trintaDiasAtras;
+  });
+};
+
+// Função para determinar a cor do indicador com base no número de incidentes
+const getCorIndicador = (quantidade: number) => {
+  if (quantidade <= 2) return 'bg-[#28aa24]'; 
+  if (quantidade <= 5) return 'bg-[#d3c726]'; 
+  return 'bg-[#d32626]'; 
+};
+
+// Função para calcular os 3 últimos incidentes
+const ultimosIncidentes = (incidentes: any[]) => {
+    return incidentes
+        .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
+        .slice(0, 3);
+};
+
 
 export default function Dashhome() {
-    const [date, setDate] = useState<Date | null>(new Date());
-    return (
-        <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-row space-x-12 overflow-y-auto">
-            <div className="flex flex-col space-y-12">
-                <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
-                    <Ambiental />
-                </div>
-                <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
-                    <Seguranca />
-                </div>
-                <div className="bg-white shadow rounded-lg p-4 w-[500px]">
-                    <span className="mb-12 font-bold">Notificações Recentes</span>
-                    <div className="flex flex-row mt-4 space-x-8 justify-center">
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center justify-center">
-                            <p className="font-bold text-xl">Título</p>
-                            <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing...</p>
-                        </div>
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center justify-center">
-                            <p className="font-bold text-xl">Título</p>
-                            <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing...</p>
-                        </div>
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center justify-center">
-                            <p className="font-bold text-xl">Título</p>
-                            <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing...</p>
-                        </div>
-                    </div>
+  const [lastUpdate, setLastUpdate] = useState<string>(new Date().toLocaleString());
 
-                </div>
+  // Atualiza a data e hora a cada 30 minutos
+  useEffect(() => {
+    const intervalo = setInterval(() => {
+      setLastUpdate(new Date().toLocaleString());
+    }, 30 * 60 * 1000);
 
-            </div>
-            <div className="flex flex-col space-y-12">
-                <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px]">
-                    <Clima
-                    />
-                </div>
-                <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px] space-y-3 flex flex-col">
-                    <div className="border-b pb-4">
-                        <span className="font-bold">Custos Recentes</span>
-                    </div>
-                    <div className="flex flex-row items-center mr-auto w-[100%]">
+    // Limpeza do intervalo quando o componente for desmontado
+    return () => clearInterval(intervalo);
+  }, []);
 
-                        <div>
-                            <p>Título</p>
-                            <p>resumo resumo</p>
-                        </div>
-                        <span className="ml-auto">00:00</span>
-                    </div>
+  // Filtrando incidentes por tipo e calculando a quantidade de incidentes nos últimos 30 dias
+  const incidentesSeguranca = incidentesRecentes('Segurança', incidentes);
+  const incidentesAmbiental = incidentesRecentes('Ambiental', incidentes);
+  
 
-                </div>
-                <div className="bg-white shadow rounded-lg p-4 w-[500px]">
-                    <span className="mb-12 font-bold">Indicadores de Risco</span><p className="text-sm">Última atualização 21-11-2024 16h14</p>
-                    <div className="flex flex-row mt-4 space-x-8 justify-center">
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
-                            <p className="font-bold text-xl">Ambiental</p>
-                            <button className='flex flex-row items-center'><div className='bg-[#28aa24] rounded-full w-8 h-8 mt-4'></div></button>
-                        </div>
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
-                            <p className="font-bold text-xl">Segurança</p>
-                            <button className='flex flex-row items-center'><div className='bg-[#d3c726] rounded-full w-8 h-8 mt-4'></div></button>
-                        </div>
-                        <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
-                            <p className="font-bold text-xl">Climático</p>
-                            <button className='flex flex-row items-center'><div className='bg-[#d32626] rounded-full w-8 h-8 mt-4'></div></button>
-                        </div>
-                    </div>
+  // Calculando as cores dos indicadores
+  const corSeguranca = getCorIndicador(incidentesSeguranca.length);
+  const corAmbiental = getCorIndicador(incidentesAmbiental.length);
+  const corClima = 'bg-[#28aa24]'; // Climático sempre verde
 
-                </div>
-            </div>
+    // Pega os últimos 3 incidentes
+    const incidentesRecentesNoti = ultimosIncidentes(incidentes);
 
-
-
+  return (
+    <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-row space-x-12 overflow-y-auto">
+      <div className="flex flex-col space-y-12">
+        <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
+          <Ambiental incidentes={incidentes} />
         </div>
-    )
+        <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
+          <Seguranca incidentes={incidentes} /> 
+        </div>
+        <div className="bg-white shadow rounded-lg p-4 w-[500px]">
+                    <span className="mb-12 font-bold">Incidentes Recentes</span>
+                    <div className="flex flex-row mt-4 space-x-8 justify-center">
+                        {incidentesRecentesNoti.map((incidente) => (
+                            <div key={incidente.id} className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center text-center justify-center">
+                                <p className="text-sm">{incidente.data}</p>
+                                <p className="font-bold text-lg">{incidente.titulo}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+      </div>
+      <div className="flex flex-col space-y-12">
+        <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px]">
+          <Clima />
+        </div>
+        <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px] space-y-3 flex flex-col">
+          <div className="border-b pb-4">
+            <span className="font-bold">Custos Recentes</span>
+          </div>
+          <div className="flex flex-row items-center mr-auto w-[100%]">
+            <div>
+              <p>Título</p>
+              <p>resumo resumo</p>
+            </div>
+            <span className="ml-auto">00:00</span>
+          </div>
+        </div>
+        <div className="bg-white shadow rounded-lg p-4 w-[500px]">
+          <span className="mb-12 font-bold">Indicadores de Risco</span>
+          <p className="text-sm">Última atualização {lastUpdate}</p>
+          <div className="flex flex-row mt-4 space-x-8 justify-center">
+            <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
+              <p className="font-bold text-xl">Ambiental</p>
+              <button className='flex flex-row items-center'>
+                <div className={`${corAmbiental} rounded-full w-8 h-8 mt-4`}></div>
+              </button>
+            </div>
+            <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
+              <p className="font-bold text-xl">Segurança</p>
+              <button className='flex flex-row items-center'>
+                <div className={`${corSeguranca} rounded-full w-8 h-8 mt-4`}></div>
+              </button>
+            </div>
+            <div className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[120px] flex flex-col items-center">
+              <p className="font-bold text-xl">Climático</p>
+              <button className='flex flex-row items-center'>
+                <div className={`${corClima} rounded-full w-8 h-8 mt-4`}></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
