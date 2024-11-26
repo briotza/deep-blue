@@ -11,6 +11,7 @@ export default function ListaAcidentes() {
   const [filtroSituacao, setFiltroSituacao] = useState("Todos");
   const [dadosFiltrados, setDadosFiltrados] = useState(acidentesOrdenados);
   const [acidenteSelecionado, setAcidenteSelecionado] = useState<Acidente | null>(null);
+  const [mostrarResolucao, setMostrarResolucao] = useState(false);
 
   // Função de pesquisa por texto
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,13 +74,17 @@ export default function ListaAcidentes() {
           columns={colunas}
           data={dadosFiltrados}
           pagination
-          onRowClicked={(row) => setAcidenteSelecionado(row)}
+          onRowClicked={(row) => {
+            if (!mostrarResolucao) {
+              setAcidenteSelecionado(row);
+            }
+          }}
           customStyles={{
             headCells: {
               style: { backgroundColor: "#1E293B", color: "#fff" },
             },
             rows: {
-              style: { backgroundColor: "#CBD5E1", color: "#000", cursor: "pointer" },
+              style: { backgroundColor: "#CBD5E1", color: "#000", cursor: mostrarResolucao ? "not-allowed" : "pointer" },
             },
           }}
         />
@@ -95,16 +100,62 @@ export default function ListaAcidentes() {
             <p><strong>Data:</strong> {new Date(acidenteSelecionado.data).toLocaleDateString()}</p>
             <p><strong>Horário:</strong> {acidenteSelecionado.horario}</p>
             <p><strong>Descrição:</strong> {acidenteSelecionado.descricao}</p>
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
-              onClick={() => setAcidenteSelecionado(null)}
-            >
-              Fechar Detalhes
-            </button>
+            {acidenteSelecionado.situacao === "Aberto" && (
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                onClick={() => setMostrarResolucao(!mostrarResolucao)}
+              >
+                Resolução
+              </button>
+            )}
+
+            {/* Botão Fechar Detalhes, visível apenas se Resolução não estiver aberta */}
+            {!mostrarResolucao && (
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                onClick={() => setAcidenteSelecionado(null)}
+              >
+                Fechar Detalhes
+              </button>
+            )}
           </div>
         )}
       </div>
 
+      {mostrarResolucao && (
+        <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
+          <h3 className="text-lg font-semibold mb-2">
+            Resolução do Acidente: {acidenteSelecionado?.titulo}
+          </h3>
+          <form className="flex flex-col">
+            <label>Responsável </label>
+            <input type="text" className="h-10 mb-2 pl-2" required />
+            <label>Data </label>
+            <input type="date" className="h-10 mb-2 pl-2" required />
+            <label>Descrição </label>
+            <textarea
+              className="w-full h-28 mb-2 pl-2 pt-2 border rounded-md"
+              required
+            />
+            <label>Custo Total </label>
+            <input type="number" className="h-10 mb-2 pl-2" required />
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md max-w-[154.19px]"
+            >
+              Enviar
+            </button>
+          </form>
+          <button
+            className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md"
+            onClick={() => setMostrarResolucao(false)}
+          >
+            Fechar Resolução
+          </button>
+        </div>
+      )}
+
     </div>
+
+
   );
 }
