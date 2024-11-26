@@ -18,8 +18,7 @@ export default function Sidebar() {
                     <h4 className='font-bold'>MENU</h4>
                     <Link to="/dashboard" className='flex flex-row items-center'><img src={grid} className='mr-4'/>Dashboard</Link>
                     <Link to="/incidentes" className='flex flex-row items-center'><img src={square} className='mr-4' />Monitoramento de Incidentes</Link>
-                    <button className='flex flex-row items-center'><img src={message} className='mr-4' />Previsão e Análise Preditiva</button>
-                    <button className='flex flex-row items-center'><img src={trophy} className='mr-4' />Relatórios e Estatísticas</button>
+                    <Link to="/relatorios" className='flex flex-row items-center'><img src={trophy} className='mr-4' />Relatórios e Estatísticas</Link>
                 </div>
                 <div className='flex flex-col space-y-4 items-start relative'>
                     <div className='flex flex-row'>
@@ -31,7 +30,7 @@ export default function Sidebar() {
 
                 </div>
                 <footer className='absolute bottom-8'>
-                    <button className='flex flex-row items-center'><img src={settings} className='mr-4' />Settings</button>
+                    <button className='flex flex-row items-center'><img src={settings} className='mr-4' />Configurações</button>
                 </footer>
             </div>
 
