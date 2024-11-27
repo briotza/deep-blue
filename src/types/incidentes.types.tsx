@@ -1,3 +1,5 @@
+import { Resolucao } from "./resolucao.types";
+
 export interface Acidente {
     id: number;
     titulo: string;
@@ -6,4 +8,5 @@ export interface Acidente {
     data: string;
     horario: string;
     descricao: string;
+    resolucao?: Resolucao; 
 }
