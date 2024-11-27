@@ -1,10 +1,13 @@
 import black from '../../assets/black.png'
 import grid from '../../assets/layout-grid.png'
-import message from '../../assets/message-circle.png'
 import square from '../../assets/square.png'
 import trophy from '../../assets/trophy.png'
 import settings from '../../assets/settings.png'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import username from '../../assets/username.png'
+import grafico from '../../assets/grafico.png'
+import externo from '../../assets/externo.png'
+
 
 export default function Sidebar() {
     return (
@@ -16,9 +19,10 @@ export default function Sidebar() {
             <div className='p-6 space-y-4'>
                 <div className='flex flex-col border-b-2 space-y-4 items-start pb-4'>
                     <h4 className='font-bold'>MENU</h4>
-                    <Link to="/dashboard" className='flex flex-row items-center'><img src={grid} className='mr-4'/>Dashboard</Link>
+                    <Link to="/dashboard" className='flex flex-row items-center'><img src={grid} className='mr-4' />Dashboard</Link>
                     <Link to="/incidentes" className='flex flex-row items-center'><img src={square} className='mr-4' />Monitoramento de Incidentes</Link>
-                    <Link to="/relatorios" className='flex flex-row items-center'><img src={trophy} className='mr-4' />Relatórios e Estatísticas</Link>
+                    <Link to="/relatorios" className='flex flex-row items-center'><img src={grafico} className='mr-4' />Relatórios e Estatísticas</Link>
+                    <Link to="/externo" className='flex flex-row items-center'><img src={externo} className='mr-4' />Plataformas Externas</Link>
                 </div>
                 <div className='flex flex-col space-y-4 items-start relative'>
                     <div className='flex flex-row'>
@@ -30,6 +34,14 @@ export default function Sidebar() {
 
                 </div>
                 <footer className='absolute bottom-8'>
+                    <div className='flex items-center mb-3'>
+                        <div className='rounded-full'>
+                            <img src={username} className='w-4 h-5 mr-1' />
+                        </div>
+                        <div className='ml-3 pr-16'>
+                            <p className=''>Perfil</p>
+                        </div>
+                    </div>
                     <button className='flex flex-row items-center'><img src={settings} className='mr-4' />Configurações</button>
                 </footer>
             </div>
