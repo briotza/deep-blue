@@ -3,6 +3,7 @@ import Home from "../pages/home";
 import Dashboard from "../pages/dashboard";
 import Incidentes from "../pages/incidentes";
 import Relatorios from "../pages/relatorios";
+import Externo from "../pages/externo";
 
 
 export default function WebRoutes () {
@@ -15,6 +16,7 @@ export default function WebRoutes () {
                 <Route path="/dashboard" element={<Dashboard/>}/>
                 <Route path="/incidentes" element={<Incidentes/>}/>
                 <Route path="/relatorios" element={<Relatorios/>} />
+                <Route path="/externo" element={<Externo/>} />
             </Routes>
         </Router>
     )

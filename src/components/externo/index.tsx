@@ -12,7 +12,7 @@ type Incidente = {
     resolucao?: Resolucao;
 };
 
-export default function Custos() {
+export default function DadosExternos() {
     // Filtrar incidentes com resolução
     const incidentesComResolucao = incidentes.filter(
         (incidente: Incidente) => incidente.resolucao
@@ -40,18 +40,6 @@ export default function Custos() {
             sortable: true,
         },
     ];
-    // Preparar os dados para o gráfico
-    const custosPorMes = Array(12).fill(0);
-
-    incidentesComResolucao.forEach((incidente) => {
-        const dataResolucao = incidente.resolucao?.data;
-        const custoTotal = incidente.resolucao?.custo_total;
-
-        if (dataResolucao && custoTotal != null) {
-            const mes = new Date(dataResolucao).getMonth();
-            custosPorMes[mes] += custoTotal;
-        }
-    });
 
     return (
         <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-8 overflow-y-auto">
@@ -70,15 +58,6 @@ export default function Custos() {
                     }}
                 />
             </div>
-            {/* Tabela de custos */}
-
-            <div className="flex justify-center">
-                {/* Gráfico de custos */}
-                <div className="bg-white shadow rounded-lg p-4 w-[700px] h-[400px]">
-                    <GraficoCustos custosPorMes={custosPorMes} />
-                </div>
-            </div>
         </div>
-
     );
 }
