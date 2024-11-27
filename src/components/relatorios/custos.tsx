@@ -41,7 +41,7 @@ export default function Custos() {
     });
 
     return (
-        <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-4 overflow-y-auto">
+        <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-8 overflow-y-auto">
             <div>
                 <DataTable
                     columns={colunas}
@@ -59,7 +59,7 @@ export default function Custos() {
             </div>
             {/* Tabela de custos */}
 
-            <div>
+            <div className="flex justify-center">
                 {/* Gráfico de custos */}
                 <div className="bg-white shadow rounded-lg p-4 w-[700px] h-[400px]">
                     <GraficoCustos custosPorMes={custosPorMes} />
