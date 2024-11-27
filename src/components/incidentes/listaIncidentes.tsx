@@ -100,27 +100,46 @@ export default function ListaAcidentes() {
             <p><strong>Data:</strong> {new Date(acidenteSelecionado.data).toLocaleDateString()}</p>
             <p><strong>Horário:</strong> {acidenteSelecionado.horario}</p>
             <p><strong>Descrição:</strong> {acidenteSelecionado.descricao}</p>
+
+            {/* Exibir resolução se disponível */}
+            {acidenteSelecionado.resolucao ? (
+              <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
+                <h3 className="text-lg font-semibold mb-2">Detalhes da Resolução:</h3>
+                <p><strong>Responsável:</strong> {acidenteSelecionado.resolucao.responsavel}</p>
+                <p><strong>Data:</strong> {new Date(acidenteSelecionado.resolucao.data).toLocaleDateString()}</p>
+                <p><strong>Descrição:</strong> {acidenteSelecionado.resolucao.descricao}</p>
+                <p><strong>Custo Total:</strong> R$ {acidenteSelecionado.resolucao.custo_total.toFixed(2)}</p>
+              </div>
+            ) : (
+              <p className="mt-4 text-red-500">Nenhuma resolução registrada para este acidente.</p>
+            )}
+
+            {/* Mostrar botão Resolução se situação for "Aberto" */}
             {acidenteSelecionado.situacao === "Aberto" && (
               <button
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
                 onClick={() => setMostrarResolucao(!mostrarResolucao)}
               >
-                Resolução
+                {mostrarResolucao ? "Fechar Resolução" : "Resolução"}
               </button>
             )}
 
-            {/* Botão Fechar Detalhes, visível apenas se Resolução não estiver aberta */}
-            {!mostrarResolucao && (
-              <button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
-                onClick={() => setAcidenteSelecionado(null)}
-              >
-                Fechar Detalhes
-              </button>
-            )}
+            {/* Botão Fechar Detalhes, desabilitado se Resolução estiver aberta */}
+            <button
+              className={`mt-4 px-4 py-2 rounded-md ${mostrarResolucao
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-blue-500 text-white"
+                }`}
+              onClick={() => !mostrarResolucao && setAcidenteSelecionado(null)}
+              disabled={mostrarResolucao}
+            >
+              Fechar Detalhes
+            </button>
           </div>
         )}
       </div>
+
+
 
       {mostrarResolucao && (
         <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
