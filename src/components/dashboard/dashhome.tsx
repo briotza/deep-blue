@@ -3,6 +3,7 @@ import Ambiental from "./ambiental";
 import Seguranca from "./seguranca";
 import Clima from "./clima";
 import { incidentes } from "../data/index";
+import { GraficoCustos } from '../relatorios/grafico';
 
 // Função para calcular a quantidade de incidentes nos últimos 30 dias
 const incidentesRecentes = (tipo: string, incidentes: any[]) => {
@@ -57,6 +58,21 @@ export default function Dashhome() {
 
     // Pega os últimos 3 incidentes
     const incidentesRecentesNoti = ultimosIncidentes(incidentes);
+
+    const incidentesComResolucao = incidentes.filter((incidente) => incidente.resolucao);
+
+    // Preparar os dados para o gráfico
+    const custosPorMes = Array(12).fill(0);
+
+    incidentesComResolucao.forEach((incidente) => {
+        const dataResolucao = incidente.resolucao?.data;
+        const custoTotal = incidente.resolucao?.custo_total;
+
+        if (dataResolucao && custoTotal != null) {
+            const mes = new Date(dataResolucao).getMonth();
+            custosPorMes[mes] += custoTotal;
+        }
+    });
 
   return (
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-row space-x-12 overflow-y-auto">
@@ -119,7 +135,11 @@ export default function Dashhome() {
             </div>
           </div>
         </div>
+        
       </div>
+      <div className="bg-white shadow rounded-lg p-4 w-[500px] h-[300px]">
+                    <GraficoCustos custosPorMes={custosPorMes} />
+                </div>
     </div>
   );
 }
