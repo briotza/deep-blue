@@ -11,18 +11,18 @@ interface GraficoCustosProps {
 export function GraficoCustos({ custosPorMes }: GraficoCustosProps) {
   const graficoDados = {
     labels: [
-      "Janeiro",
-      "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
+      "Jan",
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul",
+      "Ago",
+      "Set",
+      "Out",
+      "Nov",
+      "Dez",
     ],
     datasets: [
       {
