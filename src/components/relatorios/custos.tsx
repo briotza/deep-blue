@@ -1,8 +1,9 @@
 import DataTable from "react-data-table-component";
+import { GraficoCustos } from "../relatorios/grafico";
 import { incidentes } from "../data";
 
 export default function Custos() {
-  // Filtrar os incidentes que possuem resolução
+  // Filtrar incidentes com resolução
   const incidentesComResolucao = incidentes.filter((incidente) => incidente.resolucao);
 
   // Configuração das colunas da tabela
@@ -20,18 +21,28 @@ export default function Custos() {
     },
     {
       name: "Custo Total (R$)",
-      selector: (row: { resolucao: { custo_total: number } }) =>
-        row.resolucao.custo_total.toFixed(2),
+      selector: (row: { resolucao: { custoTotal: number } }) =>
+        row.resolucao?.custoTotal != null ? row.resolucao.custoTotal.toFixed(2) : "N/A", 
       sortable: true,
     },
   ];
 
+  // Preparar os dados para o gráfico
+  const custosPorMes = Array(12).fill(0); 
+
+  incidentesComResolucao.forEach((incidente) => {
+    const dataResolucao = incidente.resolucao?.data;
+    const custoTotal = incidente.resolucao?.custo_total;
+    
+    if (dataResolucao && custoTotal != null) { 
+      const mes = new Date(dataResolucao).getMonth();
+      custosPorMes[mes] += custoTotal; 
+    }
+  });
+
   return (
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-6 overflow-y-auto">
-      <h1 className="text-2xl font-bold text-center text-white">
-        Custos das Resoluções de Acidentes
-      </h1>
-
+ 
       {/* Tabela de custos */}
       <DataTable
         columns={colunas}
@@ -46,6 +57,9 @@ export default function Custos() {
           },
         }}
       />
+
+      {/* Gráfico de custos */}
+      <GraficoCustos custosPorMes={custosPorMes} />
     </div>
   );
 }
