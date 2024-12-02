@@ -169,7 +169,7 @@ export default function Dashhome() {
         </div>
       </div>
       <div className="bg-white shadow rounded-lg p-6 w-[600px]">
-        <h2 className="text-lg font-bold mb-4">Notícias</h2>
+        <h2 className="text-lg font-bold mb-4">Notificações</h2>
         <div className="space-y-4">
           {ultimasNoticias.map((noticia) => (
             <div
