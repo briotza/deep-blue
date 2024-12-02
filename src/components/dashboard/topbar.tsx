@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import grid from '../../assets/layout-grid.png';
+import grid from '../../assets/dash.png';
 import square from '../../assets/square.png';
 import grafico from '../../assets/grafico.png';
 import externo from '../../assets/externo.png';
