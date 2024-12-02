@@ -96,8 +96,8 @@ export default function Dashhome() {
   });
 
   return (
-    <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-row space-x-12 overflow-y-auto">
-      <div className="flex flex-col space-y-12">
+    <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col md:flex-row space-x-12 overflow-y-auto">
+      <div className="flex flex-col space-y-12 mb-12">
         <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
           <Ambiental incidentes={incidentes} />
         </div>
@@ -120,7 +120,7 @@ export default function Dashhome() {
         </div>
 
       </div>
-      <div className="flex flex-col space-y-12">
+      <div className="flex flex-col space-y-12 mb-12">
         <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px]">
           <Clima />
         </div>
@@ -168,7 +168,7 @@ export default function Dashhome() {
           <GraficoCustos custosPorMes={custosPorMes} />
         </div>
       </div>
-      <div className="bg-white shadow rounded-lg p-6 w-[600px]">
+      <div className="bg-white shadow rounded-lg p-6 min-w-[400px]">
         <h2 className="text-lg font-bold mb-4">Notificações</h2>
         <div className="space-y-4">
           {ultimasNoticias.map((noticia) => (

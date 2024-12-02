@@ -12,7 +12,7 @@ interface SignupProps {
 
 export default function Signup({ onSwitchForm }: SignupProps) {
     return (
-        <div className="bg-white w-[50%] h-[100%] flex items-center justify-center font-inter flex-col">
+        <div className="bg-white md:w-[50%] w-[100%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 max-w-[64%]">
                 <span className="text-2xl font-bold">Crie uma conta</span>
                 <div className="flex flex-row border rounded-xl items-center">

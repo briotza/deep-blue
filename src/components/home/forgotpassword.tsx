@@ -8,7 +8,7 @@ interface onSwitchSignupProps {
 
 export default function ForgotPassword({ onSwitchForm, onSwitchSignup, onSwitchToEmail }: onSwitchSignupProps) {
     return (
-        <div className="bg-white w-[50%] h-[100%] flex items-center justify-center font-inter flex-col">
+        <div className="bg-white md:w-[50%] w-[100%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 w-[64%]">
                 <span className="text-2xl font-bold">Alterar senha</span>
                 <p>Digite o endereço de e-mail associado à sua conta e enviaremos um link para redefinir sua senha.</p>
