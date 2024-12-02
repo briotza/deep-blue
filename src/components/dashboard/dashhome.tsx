@@ -59,8 +59,8 @@ export default function Dashhome() {
     return () => clearInterval(intervalo);
   }, []);
 
-    // Obter os últimos 3 custos
-    const custosRecentes = ultimosCustos(incidentes);
+  // Obter os últimos 3 custos
+  const custosRecentes = ultimosCustos(incidentes);
 
   // Filtrando incidentes por tipo e calculando a quantidade de incidentes nos últimos 30 dias
   const incidentesSeguranca = incidentesRecentes('Segurança', incidentes);
@@ -99,17 +99,21 @@ export default function Dashhome() {
         <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
           <Seguranca incidentes={incidentes} />
         </div>
-        <div className="bg-white shadow rounded-lg p-4 w-[500px]">
-          <span className="mb-12 font-bold">Incidentes Recentes</span>
-          <div className="flex flex-row mt-4 space-x-8 justify-center">
+        <div className="bg-white shadow rounded-lg p-6 w-[600px]">
+          <h2 className="text-lg font-bold mb-4">Incidentes Recentes</h2>
+          <div className="grid grid-cols-3 gap-4">
             {incidentesRecentesNoti.map((incidente) => (
-              <div key={incidente.id} className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center text-center justify-center">
-                <p className="text-sm">{incidente.data}</p>
-                <p className="font-bold text-lg">{incidente.titulo}</p>
+              <div
+                key={incidente.id}
+                className="bg-[#F1F5F9] shadow rounded-lg p-4 flex flex-col items-center justify-center text-center"
+              >
+                <p className="text-sm text-gray-500 mb-2">{new Date(incidente.data).toLocaleDateString()}</p>
+                <p className="font-semibold text-lg text-gray-800">{incidente.titulo}</p>
               </div>
             ))}
           </div>
         </div>
+
       </div>
       <div className="flex flex-col space-y-12">
         <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px]">
