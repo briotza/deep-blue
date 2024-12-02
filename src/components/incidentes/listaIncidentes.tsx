@@ -51,7 +51,7 @@ export default function ListaAcidentes() {
         {/* Input de pesquisa */}
         <input
           type="text"
-          placeholder="Procurar acidente..."
+          placeholder="Procurar incidente..."
           value={filtroTexto}
           onChange={handleSearch}
           className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
@@ -138,8 +138,6 @@ export default function ListaAcidentes() {
           </div>
         )}
       </div>
-
-
 
       {mostrarResolucao && (
         <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
