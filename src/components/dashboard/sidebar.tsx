@@ -28,7 +28,7 @@ export default function Sidebar() {
                     <div className='flex flex-row'>
                         <h4 className='font-bold'>ATIVIDADES</h4>
                     </div>
-                    <button className='flex flex-row items-center'><div className='bg-[#6366F1] rounded-full w-3 h-3 mr-6'></div> Registrar Incidente</button>
+                    <Link to="/formulario-incidentes" className='flex flex-row items-center'><div className='bg-[#6366F1] rounded-full w-3 h-3 mr-6'></div> Registrar Incidente</Link>
                     <button className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> Relatório de Custos</button>
                     <button className='flex flex-row items-center'><div className='bg-[#34D399] rounded-full w-3 h-3 mr-6'></div> Enviar Notificação</button>
 

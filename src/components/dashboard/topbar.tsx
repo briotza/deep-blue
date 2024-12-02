@@ -1,5 +1,3 @@
-import search from '../../assets/Search.png'
-import bell from '../../assets/bell.png'
 import { useLocation } from 'react-router-dom'
 
 export default function Topbar() {
@@ -14,7 +12,12 @@ export default function Topbar() {
         title = "Relatórios"
     } else if (location.pathname === '/externo') {
         title = "Plataformas Externas"
+    }else if (location.pathname === '/formulario-incidentes') {
+        title = "Registrar Incidente"
     }
+
+
+  
 
     return (
         <div className="flex flex-row p-6 h-[86px] items-center">
