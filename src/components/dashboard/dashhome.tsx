@@ -4,6 +4,7 @@ import Seguranca from "./seguranca";
 import Clima from "./clima";
 import { incidentes } from "../data/index";
 import { GraficoCustos } from '../relatorios/grafico';
+import { noticias } from '../data/noticias';
 
 // Função para calcular a quantidade de incidentes nos últimos 30 dias
 const incidentesRecentes = (tipo: string, incidentes: any[]) => {
@@ -43,6 +44,10 @@ const ultimosCustos = (incidentes: any[]) => {
     )
     .slice(0, 3);
 };
+
+const ultimasNoticias = noticias
+  .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
+  .slice(0, 3);
 
 
 
@@ -159,11 +164,26 @@ export default function Dashhome() {
             </div>
           </div>
         </div>
+        <div className="bg-white shadow rounded-lg p-4 w-[500px] h-[300px]">
+          <GraficoCustos custosPorMes={custosPorMes} />
+        </div>
+      </div>
+      <div className="bg-white shadow rounded-lg p-6 w-[600px]">
+        <h2 className="text-lg font-bold mb-4">Notícias</h2>
+        <div className="space-y-4">
+          {ultimasNoticias.map((noticia) => (
+            <div
+              key={noticia.id}
+              className="bg-[#F1F5F9] shadow rounded-lg p-4"
+            >
+              <p className="text-sm text-gray-500 mb-2">{new Date(noticia.data).toLocaleDateString()}</p>
+              <h3 className="font-semibold text-lg text-gray-800">{noticia.titulo}</h3>
+              <p className="text-sm text-gray-600">{noticia.descricao}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      </div>
-      <div className="bg-white shadow rounded-lg p-4 w-[500px] h-[300px]">
-        <GraficoCustos custosPorMes={custosPorMes} />
-      </div>
     </div>
   );
 }
