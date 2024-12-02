@@ -52,8 +52,8 @@ export default function Painel() {
                         </SwiperSlide>
                     </Swiper>
                 </div>
-                <p className='text-white font-bold text-2xl font-inter justify-self-center'>Customizable Multipurpose Dashboard</p>
-                <span className='text-[#F8FAFC] font-inter text-sm'>Everything you need in an easily customizable dashboard.</span>
+                <p className='text-white font-bold text-2xl font-inter justify-self-center'>Dashboard de Monitoramento de Incidentes</p>
+                <span className='text-[#F8FAFC] font-inter text-sm'>Tudo o que você precisa para sua segurança.</span>
 
                 <div className="pb-8 mt-4 flex justify-center space-x-3">
                     {[0, 1, 2].map((index) => (

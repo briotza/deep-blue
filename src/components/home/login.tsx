@@ -13,8 +13,8 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
     return (
         <div className="bg-white w-[50%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 min-w-[64%]">
-                <span className="text-2xl font-bold">Sign In to your Account</span>
-                <p>Welcome back! Please enter your detail</p>
+                <span className="text-2xl font-bold">Entrar na sua conta</span>
+                <p>Bem vindo de volta!</p>
                
 
                 <div className="flex flex-row border rounded-xl items-center">
@@ -34,7 +34,7 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
                         className="w-[100%] h-12 pl-2 rounded-xl"
                         id="password"
                         type="password"
-                        placeholder="Password"
+                        placeholder="Senha"
                         required
                     />
                 </div>
@@ -44,16 +44,16 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
                         className="mr-2"
                         type="checkbox"
                     />
-                    <span className="text-xs">Remember me</span>
-                    <button className="ml-auto text-xs text-[#150050] font-bold"  onClick={onForgotPassword}>Forgot Password?</button>
+                    <span className="text-xs">Lembrar-se</span>
+                    <button className="ml-auto text-xs text-[#150050] font-bold"  onClick={onForgotPassword}>Esqueceu a senha?</button>
                 </div>
 
-                <Link to='/dashboard'><button className="mt-2 w-[100%] bg-[#150050] text-white rounded-xl border h-12">Sign In</button></Link>
+                <Link to='/dashboard'><button className="mt-2 w-[100%] bg-[#150050] text-white rounded-xl border h-12">Entrar</button></Link>
 
             </form>
             <div className="flex flex-row w-[100%] items-center justify-center my-8">
                 <div className="border-t w-[20%]"></div>
-                <span className="text-[#64748B] text-sm mx-4">Or sign in with</span>
+                <span className="text-[#64748B] text-sm mx-4">Ou entrar com</span>
                 <div className="border-t w-[20%]"></div>
             </div>
             
@@ -62,7 +62,7 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
                 <button className="flex items-center rounded-xl border py-5 px-8"><img src={facebook} className="mr-1"/>Facebook</button>
             </div>
 
-            <span className="text-sm mt-8">Don’t have an account? <button onClick={onSwitchForm}><b>Sign Up</b></button></span>
+            <span className="text-sm mt-8">Não tem uma conta? <button onClick={onSwitchForm}><b>Cadastre-se</b></button></span>
         </div>
     )
 }

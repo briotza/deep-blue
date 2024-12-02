@@ -1,17 +1,17 @@
 import email from "../../assets/email.png"
 
 interface onSwitchSignupProps {
-    onSwitchForm: () => void; 
-    onSwitchSignup: () => void; 
+    onSwitchForm: () => void;
+    onSwitchSignup: () => void;
     onSwitchToEmail: () => void;
 }
 
 export default function ForgotPassword({ onSwitchForm, onSwitchSignup, onSwitchToEmail }: onSwitchSignupProps) {
-    return(
+    return (
         <div className="bg-white w-[50%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 w-[64%]">
-                <span className="text-2xl font-bold">Reset your password</span>
-                <p>Enter the email address associated with your account and we will send you a link to reset your password.</p>
+                <span className="text-2xl font-bold">Alterar senha</span>
+                <p>Digite o endereço de e-mail associado à sua conta e enviaremos um link para redefinir sua senha.</p>
 
                 <div className="flex flex-row border rounded-xl items-center">
                     <img src={email} className="w-5 mx-4" />
@@ -29,10 +29,10 @@ export default function ForgotPassword({ onSwitchForm, onSwitchSignup, onSwitchT
             </form>
 
             <span className="text-sm mt-8">
-            <button onClick={onSwitchForm}><b>Back to Sign In</b></button>
+                <button onClick={onSwitchForm}><b>Voltar</b></button>
             </span>
-            <p className="absolute bottom-16">Don’t have an account? <button onClick={onSwitchSignup}><b>Sign Up</b></button></p>
+            <p className="absolute bottom-16">Não tem uma conta? <button onClick={onSwitchSignup}><b>Cadastre-se</b></button></p>
         </div>
-        
+
     )
 }
