@@ -40,7 +40,6 @@ export default function Sidebar() {
                             <p className=''>Perfil</p>
                         </div>
                     </Link>
-                    <button className='flex flex-row items-center'><img src={settings} className='mr-4' />Configurações</button>
                 </footer>
             </div>
 
