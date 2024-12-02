@@ -40,8 +40,6 @@ export default function FormIncidente() {
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-6 overflow-y-auto">
       {/* Formulário */}
       <form onSubmit={handleAddAcidente} className="space-y-4 bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-xl font-bold">Cadastrar Incidente</h2>
-
         <div className="flex flex-col">
           <label className="font-semibold">Título</label>
           <input
