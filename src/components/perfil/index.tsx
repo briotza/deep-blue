@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../AuthContext"
 
 export default function Profile() {
-  const [username, setUsername] = useState("JohnDoe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [password, setPassword] = useState("");
+  const { email, password, login, logout } = useAuth();
+  const [username, setUsername] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
 
   const handleEditProfile = () => {
     setIsEditing((prev) => !prev);
   };
 
   const handleSaveProfile = () => {
-    // Salvar as alterações do perfil (implemente o backend conforme necessário)
     setIsEditing(false);
     alert("Perfil atualizado com sucesso!");
   };
@@ -23,8 +23,7 @@ export default function Profile() {
   };
 
   const handleSavePassword = () => {
-    // Salvar a nova senha (implemente a lógica de envio de e-mail aqui)
-    setPassword("");
+    setNewPassword("");
     setIsChangingPassword(false);
     alert("Senha alterada! Um e-mail de confirmação foi enviado.");
   };
@@ -60,8 +59,8 @@ export default function Profile() {
               <label className="block text-sm font-bold">Email</label>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={email || ""}
+                onChange={(e) => login(e.target.value, password || "")}
                 className="w-full border px-3 py-2 rounded"
               />
             </div>
@@ -91,8 +90,8 @@ export default function Profile() {
               <label className="block text-sm font-bold">Nova Senha</label>
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 className="w-full border px-3 py-2 rounded"
               />
             </div>
@@ -106,8 +105,9 @@ export default function Profile() {
         )}
       </div>
 
-      <Link to='/'
+      <Link to="/"
         className="bg-gray-700 text-white px-4 py-2 rounded self-start"
+        onClick={logout}
       >
         Sair
       </Link>
