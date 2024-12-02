@@ -20,17 +20,30 @@ const incidentesRecentes = (tipo: string, incidentes: any[]) => {
 
 // Função para determinar a cor do indicador com base no número de incidentes
 const getCorIndicador = (quantidade: number) => {
-  if (quantidade <= 2) return 'bg-[#28aa24]'; 
-  if (quantidade <= 5) return 'bg-[#d3c726]'; 
-  return 'bg-[#d32626]'; 
+  if (quantidade <= 2) return 'bg-[#28aa24]';
+  if (quantidade <= 5) return 'bg-[#d3c726]';
+  return 'bg-[#d32626]';
 };
 
 // Função para calcular os 3 últimos incidentes
 const ultimosIncidentes = (incidentes: any[]) => {
-    return incidentes
-        .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
-        .slice(0, 3);
+  return incidentes
+    .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
+    .slice(0, 3);
 };
+
+// Função para calcular os 3 últimos custos
+const ultimosCustos = (incidentes: any[]) => {
+  return incidentes
+    .filter((incidente) => incidente.resolucao?.custo_total != null)
+    .sort(
+      (a, b) =>
+        new Date(b.resolucao.data).getTime() -
+        new Date(a.resolucao.data).getTime()
+    )
+    .slice(0, 3);
+};
+
 
 
 export default function Dashhome() {
@@ -46,33 +59,36 @@ export default function Dashhome() {
     return () => clearInterval(intervalo);
   }, []);
 
+    // Obter os últimos 3 custos
+    const custosRecentes = ultimosCustos(incidentes);
+
   // Filtrando incidentes por tipo e calculando a quantidade de incidentes nos últimos 30 dias
   const incidentesSeguranca = incidentesRecentes('Segurança', incidentes);
   const incidentesAmbiental = incidentesRecentes('Ambiental', incidentes);
-  
+
 
   // Calculando as cores dos indicadores
   const corSeguranca = getCorIndicador(incidentesSeguranca.length);
   const corAmbiental = getCorIndicador(incidentesAmbiental.length);
-  const corClima = 'bg-[#28aa24]'; // Climático sempre verde
+  const corClima = 'bg-[#28aa24]';
 
-    // Pega os últimos 3 incidentes
-    const incidentesRecentesNoti = ultimosIncidentes(incidentes);
+  // Pega os últimos 3 incidentes
+  const incidentesRecentesNoti = ultimosIncidentes(incidentes);
 
-    const incidentesComResolucao = incidentes.filter((incidente) => incidente.resolucao);
+  const incidentesComResolucao = incidentes.filter((incidente) => incidente.resolucao);
 
-    // Preparar os dados para o gráfico
-    const custosPorMes = Array(12).fill(0);
+  // Preparar os dados para o gráfico
+  const custosPorMes = Array(12).fill(0);
 
-    incidentesComResolucao.forEach((incidente) => {
-        const dataResolucao = incidente.resolucao?.data;
-        const custoTotal = incidente.resolucao?.custo_total;
+  incidentesComResolucao.forEach((incidente) => {
+    const dataResolucao = incidente.resolucao?.data;
+    const custoTotal = incidente.resolucao?.custo_total;
 
-        if (dataResolucao && custoTotal != null) {
-            const mes = new Date(dataResolucao).getMonth();
-            custosPorMes[mes] += custoTotal;
-        }
-    });
+    if (dataResolucao && custoTotal != null) {
+      const mes = new Date(dataResolucao).getMonth();
+      custosPorMes[mes] += custoTotal;
+    }
+  });
 
   return (
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-row space-x-12 overflow-y-auto">
@@ -81,19 +97,19 @@ export default function Dashhome() {
           <Ambiental incidentes={incidentes} />
         </div>
         <div className="bg-white shadow rounded-lg p-4 w-[600px] h-[300px]">
-          <Seguranca incidentes={incidentes} /> 
+          <Seguranca incidentes={incidentes} />
         </div>
         <div className="bg-white shadow rounded-lg p-4 w-[500px]">
-                    <span className="mb-12 font-bold">Incidentes Recentes</span>
-                    <div className="flex flex-row mt-4 space-x-8 justify-center">
-                        {incidentesRecentesNoti.map((incidente) => (
-                            <div key={incidente.id} className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center text-center justify-center">
-                                <p className="text-sm">{incidente.data}</p>
-                                <p className="font-bold text-lg">{incidente.titulo}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+          <span className="mb-12 font-bold">Incidentes Recentes</span>
+          <div className="flex flex-row mt-4 space-x-8 justify-center">
+            {incidentesRecentesNoti.map((incidente) => (
+              <div key={incidente.id} className="bg-[#E2E8F0] shadow rounded-lg p-4 w-[120px] h-[160px] flex flex-col items-center text-center justify-center">
+                <p className="text-sm">{incidente.data}</p>
+                <p className="font-bold text-lg">{incidente.titulo}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <div className="flex flex-col space-y-12">
         <div className="bg-white shadow rounded-lg p-4 w-[350px] h-[220px]">
@@ -103,12 +119,16 @@ export default function Dashhome() {
           <div className="border-b pb-4">
             <span className="font-bold">Custos Recentes</span>
           </div>
-          <div className="flex flex-row items-center mr-auto w-[100%]">
-            <div>
-              <p>Título</p>
-              <p>resumo resumo</p>
-            </div>
-            <span className="ml-auto">00:00</span>
+          <div className="space-y-2">
+            {custosRecentes.map((incidente, index) => (
+              <div
+                key={index}
+                className="flex justify-between items-center text-sm"
+              >
+                <p className="font-bold">{incidente.titulo}</p>
+                <p>R$ {incidente.resolucao.custo_total.toFixed(2)}</p>
+              </div>
+            ))}
           </div>
         </div>
         <div className="bg-white shadow rounded-lg p-4 w-[500px]">
@@ -135,11 +155,11 @@ export default function Dashhome() {
             </div>
           </div>
         </div>
-        
+
       </div>
       <div className="bg-white shadow rounded-lg p-4 w-[500px] h-[300px]">
-                    <GraficoCustos custosPorMes={custosPorMes} />
-                </div>
+        <GraficoCustos custosPorMes={custosPorMes} />
+      </div>
     </div>
   );
 }
