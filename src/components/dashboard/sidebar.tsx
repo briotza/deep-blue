@@ -29,9 +29,7 @@ export default function Sidebar() {
                         <h4 className='font-bold'>ATIVIDADES</h4>
                     </div>
                     <Link to="/formulario-incidentes" className='flex flex-row items-center'><div className='bg-[#6366F1] rounded-full w-3 h-3 mr-6'></div> Registrar Incidente</Link>
-                    <button className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> Relatório de Custos</button>
-                    <button className='flex flex-row items-center'><div className='bg-[#34D399] rounded-full w-3 h-3 mr-6'></div> Enviar Notificação</button>
-
+                    <Link to="/formulario-notificacoes" className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> Enviar Notificação</Link>
                 </div>
                 <footer className='absolute bottom-8'>
                     <div className='flex items-center mb-3'>

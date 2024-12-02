@@ -14,10 +14,9 @@ export default function Topbar() {
         title = "Plataformas Externas"
     }else if (location.pathname === '/formulario-incidentes') {
         title = "Registrar Incidente"
+    }else if (location.pathname === '/formulario-notificacoes') {
+        title = "Enviar Notificação"
     }
-
-
-  
 
     return (
         <div className="flex flex-row p-6 h-[86px] items-center">
