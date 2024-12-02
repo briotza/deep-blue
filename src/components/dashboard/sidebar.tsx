@@ -32,14 +32,14 @@ export default function Sidebar() {
                     <Link to="/formulario-notificacoes" className='flex flex-row items-center'><div className='bg-[#F6A723] rounded-full w-3 h-3 mr-6'></div> Enviar Notificação</Link>
                 </div>
                 <footer className='absolute bottom-8'>
-                    <div className='flex items-center mb-3'>
+                    <Link to="/perfil" className='flex items-center mb-3'>
                         <div className='rounded-full'>
                             <img src={username} className='w-4 h-5 mr-1' />
                         </div>
                         <div className='ml-3 pr-16'>
                             <p className=''>Perfil</p>
                         </div>
-                    </div>
+                    </Link>
                     <button className='flex flex-row items-center'><img src={settings} className='mr-4' />Configurações</button>
                 </footer>
             </div>

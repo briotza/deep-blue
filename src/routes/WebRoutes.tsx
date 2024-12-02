@@ -6,6 +6,7 @@ import Relatorios from "../pages/relatorios";
 import Externo from "../pages/externo";
 import FormularioIncidentes from "../pages/formularioIncidente"
 import Notificacoes from "../pages/notificacoes";
+import Perfil from "../pages/perfil";
 
 
 export default function WebRoutes () {
@@ -21,6 +22,7 @@ export default function WebRoutes () {
                 <Route path="/externo" element={<Externo/>} />
                 <Route path="/formulario-incidentes" element={<FormularioIncidentes/>} />
                 <Route path="/formulario-notificacoes" element={<Notificacoes/>} />
+                <Route path="/perfil" element={<Perfil/>} />
             </Routes>
         </Router>
     )

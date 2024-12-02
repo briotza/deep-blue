@@ -16,6 +16,8 @@ export default function Topbar() {
         title = "Registrar Incidente"
     }else if (location.pathname === '/formulario-notificacoes') {
         title = "Enviar Notificação"
+    }else if (location.pathname === '/perfil') {
+        title = "Perfil"
     }
 
     return (
