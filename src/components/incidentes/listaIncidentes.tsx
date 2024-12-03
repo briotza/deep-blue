@@ -1,17 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import { Acidente } from "../../types/incidentes.types";
-import { incidentes } from "../data";
 
 export default function ListaAcidentes() {
-
-  const acidentesOrdenados = [...incidentes].sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
-
+  const [acidentes, setAcidentes] = useState<Acidente[]>([]);
   const [filtroTexto, setFiltroTexto] = useState("");
   const [filtroSituacao, setFiltroSituacao] = useState("Todos");
-  const [dadosFiltrados, setDadosFiltrados] = useState(acidentesOrdenados);
+  const [dadosFiltrados, setDadosFiltrados] = useState<Acidente[]>([]);
   const [acidenteSelecionado, setAcidenteSelecionado] = useState<Acidente | null>(null);
   const [mostrarResolucao, setMostrarResolucao] = useState(false);
+
+  // Função para buscar os acidentes da API
+  const fetchAcidentes = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/acidente");
+      if (!response.ok) {
+        throw new Error("Erro ao buscar os acidentes");
+      }
+      const dados = await response.json();
+      setAcidentes(dados);
+    } catch (error) {
+      console.error("Erro ao carregar os acidentes:", error);
+    }
+  };
+
+  // Carregar acidentes na primeira renderização
+  useEffect(() => {
+    fetchAcidentes();
+  }, []);
+
+  // Ordenar os acidentes por data
+  const acidentesOrdenados = [...acidentes].sort(
+    (a, b) => new Date(b.data).getTime() - new Date(a.data).getTime()
+  );
 
   // Função de pesquisa por texto
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +87,6 @@ export default function ListaAcidentes() {
           <option value="Todos">Todos</option>
           <option value="Aberto">Aberto</option>
           <option value="Fechado">Fechado</option>
-          <option value="Em andamento">Em andamento</option>
         </select>
 
         {/* Tabela de acidentes */}
@@ -101,8 +121,8 @@ export default function ListaAcidentes() {
             <p><strong>Horário:</strong> {acidenteSelecionado.horario}</p>
             <p><strong>Descrição:</strong> {acidenteSelecionado.descricao}</p>
 
-            {/* Exibir resolução se disponível */}
-            {acidenteSelecionado.resolucao ? (
+            {/* Exibir resolução se já houver e não for "Aberto" */}
+            {acidenteSelecionado.situacao !== "Aberto" && acidenteSelecionado.resolucao ? (
               <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
                 <h3 className="text-lg font-semibold mb-2">Detalhes da Resolução:</h3>
                 <p><strong>Responsável:</strong> {acidenteSelecionado.resolucao.responsavel}</p>
@@ -110,17 +130,15 @@ export default function ListaAcidentes() {
                 <p><strong>Descrição:</strong> {acidenteSelecionado.resolucao.descricao}</p>
                 <p><strong>Custo Total:</strong> R$ {acidenteSelecionado.resolucao.custo_total.toFixed(2)}</p>
               </div>
-            ) : (
-              <p className="mt-4 text-red-500">Nenhuma resolução registrada para este acidente.</p>
-            )}
+            ) : null}
 
-            {/* Mostrar botão Resolução se situação for "Aberto" */}
+            {/* Mostrar botão de adicionar resolução se a situação for "Aberto" */}
             {acidenteSelecionado.situacao === "Aberto" && (
               <button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md mr-3"
                 onClick={() => setMostrarResolucao(!mostrarResolucao)}
               >
-                {mostrarResolucao ? "Fechar Resolução" : "Resolução"}
+                {mostrarResolucao ? "Fechar Resolução" : "Adicionar Resolução"}
               </button>
             )}
 
@@ -139,10 +157,10 @@ export default function ListaAcidentes() {
         )}
       </div>
 
-      {mostrarResolucao && (
+      {mostrarResolucao && acidenteSelecionado?.situacao === "Aberto" && (
         <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-md">
           <h3 className="text-lg font-semibold mb-2">
-            Resolução do Acidente: {acidenteSelecionado?.titulo}
+            Adicionar Resolução para o Acidente: {acidenteSelecionado?.titulo}
           </h3>
           <form className="flex flex-col">
             <label>Responsável </label>
@@ -163,16 +181,13 @@ export default function ListaAcidentes() {
             </button>
           </form>
           <button
-            className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md"
+            className="mt-2 px-4 py-2 bg-gray-500 text-white rounded-md"
             onClick={() => setMostrarResolucao(false)}
           >
             Fechar Resolução
           </button>
         </div>
       )}
-
     </div>
-
-
   );
 }
