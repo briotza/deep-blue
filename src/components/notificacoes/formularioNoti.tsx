@@ -13,27 +13,53 @@ export default function FormNotificacao() {
     descricao: "",
   });
 
-  // Obtém a data atual
-  const dataAtual = new Date().toISOString().split('T')[0];
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const dataAtual = new Date().toISOString();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNovaNotificacao((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddNotificacao = (e: React.FormEvent) => {
+  const handleAddNotificacao = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Adiciona a data automaticamente
     if (novaNotificacao.titulo && novaNotificacao.descricao) {
       const notificacaoComData = {
         ...novaNotificacao,
         data: dataAtual,
       };
 
+      setLoading(true);
+      setError(null); 
 
-      console.log("Notificação cadastrada:", notificacaoComData);
-      setNovaNotificacao({ titulo: "", descricao: "" });
+      try {
+        const response = await fetch("http://localhost:3000/noticias", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(notificacaoComData),
+        });
+
+        if (response.ok) {
+          console.log("Notificação cadastrada:", notificacaoComData);
+          alert("Notificação enviada com sucesso!");
+          setNovaNotificacao({ titulo: "", descricao: "" }); 
+        } else {
+          throw new Error("Falha ao cadastrar notificação");
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message); 
+        } else {
+          setError("Erro desconhecido");
+        }
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -74,9 +100,16 @@ export default function FormNotificacao() {
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          disabled={loading}
         >
-          Cadastrar
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </button>
+
+        {error && (
+          <div className="text-red-500 mt-2">
+            <strong>{error}</strong>
+          </div>
+        )}
       </form>
     </div>
   );
