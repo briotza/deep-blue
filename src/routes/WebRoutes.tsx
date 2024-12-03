@@ -13,9 +13,7 @@ export default function WebRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/">
-          <Route index element={<Home />} />
-        </Route>
+        <Route path="/" element={<Home />} />
 
         {/* Rotas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
@@ -25,7 +23,6 @@ export default function WebRoutes() {
         <Route path="/formulario-notificacoes" element={<ProtectedRoute element={<Notificacoes />} />} />
         <Route path="/perfil" element={<ProtectedRoute element={<Perfil />} />} />
         <Route path="/externo" element={<ProtectedRoute element={<Externo />} />} />
-
       </Routes>
     </Router>
   );
