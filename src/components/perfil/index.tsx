@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 
 export default function Profile() {
-  const { user, email, logout } = useAuth();
+  const { user, email, logout, login } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -13,42 +13,49 @@ export default function Profile() {
   const handleEditProfile = () => setIsEditing((prev) => !prev);
 
   const handleSaveProfile = async () => {
-    if (!user) return; 
-
+    if (!user?.id) return;
+  
     try {
-      const response = await fetch(`/api/users/${user.username}`, {
+      const response = await fetch(`http://localhost:3000/user/${user.id}`, { 
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user: { name: editedName },
-          login: { email: editedEmail },
+          name: editedName ,
+          email: editedEmail ,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error("Erro ao atualizar perfil");
       }
-
+  
       alert("Perfil atualizado com sucesso!");
       setIsEditing(false);
+  
+      login(user.id, editedName, editedEmail);
+  
     } catch (error) {
       console.error(error);
       alert("Ocorreu um erro ao atualizar o perfil");
     }
+    
   };
-
   const handleChangePassword = () => setIsChangingPassword((prev) => !prev);
 
   const handleSavePassword = async () => {
+    if (!user?.id) return;
+
     try {
-      const response = await fetch(`/api/logins/${email}`, {
+      const response = await fetch(`http://localhost:3000/user/${user.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ password: newPassword }),
+        body: JSON.stringify({
+          password: newPassword ,
+        }),
       });
 
       if (!response.ok) {

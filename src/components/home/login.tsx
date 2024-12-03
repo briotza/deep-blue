@@ -2,11 +2,9 @@ import emailIcon from "../../assets/email.png";
 import passwordIcon from "../../assets/password.png";
 import google from "../../assets/google.png";
 import facebook from "../../assets/facebook.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../AuthContext"; 
-
-
 
 interface LoginProps {
     onSwitchForm: () => void;
@@ -33,18 +31,15 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
             },
             body: JSON.stringify({ email, password }),
           });
-      
+    
           if (response.ok) {
             const data = await response.json();
             console.log("Login bem-sucedido:", data);
           
-            login(data.user.name, email); 
-            localStorage.setItem("email", data.user.email);
-            localStorage.setItem("username", data.user.username);
-            localStorage.setItem("authToken", data.token);
-          
+            login(data.user.id,data.user.name, email); 
+            
             navigate("/dashboard");
-          }else {
+          } else {
             const errorData = await response.json();
             console.log("Erro no login:", errorData);
             setError("Credenciais inválidas. Tente novamente.");
@@ -53,7 +48,8 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
           console.log("Erro ao fazer login:", error);
           setError("Ocorreu um erro ao tentar fazer login.");
         }
-      };
+    };
+    
       
     return (
         <div className="bg-white md:w-[50%] w-[100%] h-[100%] flex items-center justify-center font-inter flex-col">

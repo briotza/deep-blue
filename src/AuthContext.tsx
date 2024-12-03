@@ -1,15 +1,15 @@
-import React, { createContext, useState, ReactNode, useContext } from "react";
+import { createContext, useState, ReactNode, useContext } from "react";
 
 interface User {
+  id: number; 
   name: string;
   email: string;
-  username: string;
 }
 
 interface AuthContextProps {
   user: User | null;
   email: string | null;
-  login: (name: string, email: string) => void;
+  login: (id: number, name: string, email: string) => void;
   logout: () => void;
 }
 
@@ -19,10 +19,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState<string | null>(null);
 
-  const login = (name: string, email: string) => {
-    setUser({ name, email, username: email.split('@')[0] }); 
-    setEmail(email);
-  };
+
+  const login = (id: number, name: string, email: string) => {
+  setUser({ id, name, email });
+  setEmail(email);
+
+};
 
   const logout = () => {
     setUser(null);
