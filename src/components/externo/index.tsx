@@ -21,8 +21,20 @@ export default function DadosExternos() {
   const [incidenteSelecionado, setIncidenteSelecionado] = useState<Incidente | null>(null);
 
   const formatarData = (data: string) => {
+    const dataIso = new Date(data);
+    if (!isNaN(dataIso.getTime())) {
+      return dataIso.toLocaleDateString("pt-BR");
+    }
+
     const [dia, mes, ano] = data.split("-");
-    return `${ano}-${mes}-${dia}`;
+    if (dia && mes && ano) {
+      const dataFormatada = new Date(`${ano}-${mes}-${dia}`);
+      if (!isNaN(dataFormatada.getTime())) {
+        return dataFormatada.toLocaleDateString("pt-BR");
+      }
+    }
+
+    return "Data inválida";
   };
 
   const buscarIncidentesDaAPI = async () => {
@@ -31,10 +43,15 @@ export default function DadosExternos() {
       const dadosApi = await response.json();
 
       if (Array.isArray(dadosApi)) {
-        setIncidentes((prevIncidentes) => [
-          ...prevIncidentes,
-          ...dadosApi,
-        ]);
+        setIncidentes((prevIncidentes) => {
+          const novosIncidentes = [
+            ...prevIncidentes,
+            ...dadosApi.filter((apiIncidente: Incidente) =>
+              !prevIncidentes.some((prevIncidente) => prevIncidente.Numero === apiIncidente.Numero)
+            ),
+          ];
+          return novosIncidentes;
+        });
       } else {
         console.error("Dados da API não são um array:", dadosApi);
       }
@@ -45,14 +62,13 @@ export default function DadosExternos() {
 
   useEffect(() => {
     if (Array.isArray(incidentesJson)) {
-      setIncidentes(incidentesJson); 
+      setIncidentes(incidentesJson);
     } else {
       console.error("Os dados locais não são um array:", incidentesJson);
     }
 
-    buscarIncidentesDaAPI(); 
+    buscarIncidentesDaAPI();
   }, []);
-
 
   const colunas = [
     {
@@ -67,8 +83,7 @@ export default function DadosExternos() {
     },
     {
       name: "Data de Criação",
-      selector: (row: Incidente) =>
-        new Date(formatarData(row.Data_de_criacao)).toLocaleDateString("pt-BR"),
+      selector: (row: Incidente) => formatarData(row.Data_de_criacao),
       sortable: true,
     },
     {
@@ -107,17 +122,16 @@ export default function DadosExternos() {
         />
       </div>
 
-      {/* Painel de Detalhes */}
       {incidenteSelecionado && (
         <div className="bg-white p-4 border border-gray-300 rounded-md shadow-md">
           <h2 className="text-xl font-bold mb-4">Detalhes do Incidente</h2>
           <p><strong>Número:</strong> {incidenteSelecionado.Numero}</p>
           <p><strong>Empresa:</strong> {incidenteSelecionado.Empresa}</p>
-          <p><strong>Data de Criação:</strong> {new Date(incidenteSelecionado.Data_de_criacao).toLocaleDateString("pt-BR")}</p>
+          <p><strong>Data de Criação:</strong> {formatarData(incidenteSelecionado.Data_de_criacao)}</p>
           <p><strong>Instalação:</strong> {incidenteSelecionado.Instalacao}</p>
-          <p><strong>Data da Primeira Observação:</strong> {incidenteSelecionado.Data_da_primeira_observacao}</p>
+          <p><strong>Data da Primeira Observação:</strong> {formatarData(incidenteSelecionado.Data_da_primeira_observacao)}</p>
           <p><strong>Hora da Primeira Observação:</strong> {incidenteSelecionado.Hora_da_primeira_observacao}</p>
-          <p><strong>Data Estimada do Incidente:</strong> {incidenteSelecionado.Data_estimada_do_incidente}</p>
+          <p><strong>Data Estimada do Incidente:</strong> {formatarData(incidenteSelecionado.Data_estimada_do_incidente)}</p>
           <p><strong>Hora do Incidente:</strong> {incidenteSelecionado.Hora_do_incidente}</p>
           <p><strong>Número de Feridos Graves:</strong> {incidenteSelecionado.Numero_de_feridos_graves}</p>
           <p><strong>Número de Fatalidades:</strong> {incidenteSelecionado.Numero_de_fatalidades}</p>
