@@ -91,14 +91,5 @@ export const incidentes: Acidente[] = [
       custo_total: 2000.0,
     },
   },
-  {
-    id: 7,
-    titulo: "Vazamento de Componente Químico",
-    tipo: "Ambiental",
-    situacao: "Aberto",
-    data: "2024-11-13",
-    horario: "14:00",
-    descricao: "Descrição do acidente 3.",
-    
-  },
+  
 ];
