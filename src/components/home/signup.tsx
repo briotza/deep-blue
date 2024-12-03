@@ -13,6 +13,7 @@ interface SignupProps {
 export default function Signup({ onSwitchForm }: SignupProps) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [birthday, setBirthday] = useState("");
     const [error, setError] = useState<string | null>(null);
@@ -48,6 +49,18 @@ export default function Signup({ onSwitchForm }: SignupProps) {
         <div className="bg-white md:w-[50%] w-[100%] h-[100%] flex items-center justify-center font-inter flex-col">
             <form className="space-y-4 max-w-[64%]" onSubmit={handleSignup}>
                 <span className="text-2xl font-bold">Crie uma conta</span>
+                <div className="flex flex-row border rounded-xl items-center">
+                    <img src={birthIcon} className="w-5 mx-4" />
+                    <input
+                        className="w-[100%] h-12 pl-2 rounded-xl"
+                        id="username"
+                        type="text"
+                        placeholder="Nome"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
                 <div className="flex flex-row border rounded-xl items-center">
                     <img src={birthIcon} className="w-5 h-6 mx-4" />
                     <input
