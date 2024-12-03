@@ -30,10 +30,14 @@ export default function ListaAcidentes() {
     }
   };
 
-  // Carregar acidentes na primeira renderização
   useEffect(() => {
     fetchAcidentes();
   }, []);
+  
+  // Atualizar os dados filtrados sempre que acidentes ou filtros mudarem
+  useEffect(() => {
+    filtrarDados(filtroTexto, filtroSituacao);
+  }, [acidentes, filtroTexto, filtroSituacao]);
 
   // Ordenar os acidentes por data
   const acidentesOrdenados = [...acidentes].sort(
@@ -139,7 +143,6 @@ export default function ListaAcidentes() {
           <option value="Todos">Todos</option>
           <option value="Aberto">Aberto</option>
           <option value="Fechado">Fechado</option>
-          <option value="Em andamento">Em andamento</option>
         </select>
 
         {/* Tabela de acidentes */}
