@@ -212,7 +212,7 @@ export default function Dashhome() {
       <div className="bg-white shadow rounded-lg p-6 min-w-[400px]">
         <h2 className="text-lg font-bold mb-4">Notificações</h2>
         <div className="space-y-4">
-          {noticias.slice(0, 3).map((noticia) => (
+          {noticias.slice(0, 5).map((noticia) => (
             <div
               key={noticia.id}
               className="bg-[#F1F5F9] shadow rounded-lg p-4"
