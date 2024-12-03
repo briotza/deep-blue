@@ -32,6 +32,7 @@ const ultimosIncidentes = (incidentes: any[]) => {
     .slice(0, 3);
 };
 
+
 // Função para calcular os 3 últimos custos
 const ultimosCustos = (incidentes: any[]) => {
   return incidentes
@@ -54,6 +55,7 @@ export default function Dashhome() {
   const [lastUpdate, setLastUpdate] = useState<string>(new Date().toLocaleString());
   const [incidentes, setIncidentes] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [noticias, setNoticias] = useState<any[]>([]);
 
   // Atualiza a data e hora a cada 30 minutos
   useEffect(() => {
@@ -95,6 +97,27 @@ export default function Dashhome() {
       custosPorMes[mes] += custoTotal;
     }
   });
+
+    // Obtém as notificações da API
+    useEffect(() => {
+      const fetchNoticias = async () => {
+        try {
+          const response = await fetch("http://localhost:3000/noticias");
+          if (!response.ok) {
+            throw new Error("Erro ao buscar as notícias");
+          }
+          const data = await response.json();
+          setNoticias(data);
+        } catch (error) {
+          console.error("Erro:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+  
+      fetchNoticias();
+    }, []);
+  
 
   useEffect(() => {
     const fetchIncidentes = async () => {
@@ -195,7 +218,7 @@ export default function Dashhome() {
       <div className="bg-white shadow rounded-lg p-6 min-w-[400px]">
         <h2 className="text-lg font-bold mb-4">Notificações</h2>
         <div className="space-y-4">
-          {ultimasNoticias.map((noticia) => (
+          {noticias.slice(0, 3).map((noticia) => (
             <div
               key={noticia.id}
               className="bg-[#F1F5F9] shadow rounded-lg p-4"
@@ -207,7 +230,6 @@ export default function Dashhome() {
           ))}
         </div>
       </div>
-
     </div>
   );
 }
