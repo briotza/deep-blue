@@ -26,7 +26,7 @@ Certifique-se de que você tenha os seguintes softwares instalados:
 Clone o repositório para sua máquina local:  
 
 ```bash
-git clone https://github.com/seu-usuario/deepblue.git
+git clone https://github.com/seu-usuario/deep-blue.git
 cd deep-blue
 ```
 
