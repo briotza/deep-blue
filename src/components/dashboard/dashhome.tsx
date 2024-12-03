@@ -3,7 +3,6 @@ import Ambiental from "./ambiental";
 import Seguranca from "./seguranca";
 import Clima from "./clima";
 import { GraficoCustos } from '../relatorios/grafico';
-import { noticias } from '../data/noticias';
 
 // Função para calcular a quantidade de incidentes nos últimos 30 dias
 const incidentesRecentes = (tipo: string, incidentes: any[]) => {
@@ -44,11 +43,6 @@ const ultimosCustos = (incidentes: any[]) => {
     )
     .slice(0, 3);
 };
-
-const ultimasNoticias = noticias
-  .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime())
-  .slice(0, 3);
-
 
 
 export default function Dashhome() {
