@@ -1,39 +1,36 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState, ReactNode, useContext } from "react";
+
+interface User {
+  name: string;
+  email: string;
+  username: string;
+}
 
 interface AuthContextProps {
+  user: User | null;
   email: string | null;
-  password: string | null;
-  login: (email: string, password: string) => void;
+  login: (name: string, email: string) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [email, setEmail] = useState<string | null>(() => {
-    const storedEmail = localStorage.getItem("email");
-    return storedEmail ? storedEmail : null;
-  });
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
 
-  const [password, setPassword] = useState<string | null>(() => {
-    return null;
-  });
-
-  const login = (email: string, password: string) => {
+  const login = (name: string, email: string) => {
+    setUser({ name, email, username: email.split('@')[0] }); 
     setEmail(email);
-    setPassword(password); 
-    localStorage.setItem("email", email); 
   };
 
   const logout = () => {
-    setEmail(null); 
-    setPassword(null);
-    localStorage.removeItem("email"); 
-
+    setUser(null);
+    setEmail(null);
   };
 
   return (
-    <AuthContext.Provider value={{ email, password, login, logout }}>
+    <AuthContext.Provider value={{ user, email, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -41,6 +38,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
   return context;
 };

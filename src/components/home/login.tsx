@@ -37,14 +37,14 @@ export default function Login({ onSwitchForm, onForgotPassword }: LoginProps) {
           if (response.ok) {
             const data = await response.json();
             console.log("Login bem-sucedido:", data);
-            
-            login(email, password); 
-      
-            localStorage.setItem("user", JSON.stringify(data.user)); 
-            localStorage.setItem("authToken", data.token); 
-      
+          
+            login(data.user.name, email); 
+            localStorage.setItem("email", data.user.email);
+            localStorage.setItem("username", data.user.username);
+            localStorage.setItem("authToken", data.token);
+          
             navigate("/dashboard");
-          } else {
+          }else {
             const errorData = await response.json();
             console.log("Erro no login:", errorData);
             setError("Credenciais inválidas. Tente novamente.");
