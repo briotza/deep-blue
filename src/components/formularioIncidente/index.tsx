@@ -1,41 +1,84 @@
 import { useState } from "react";
 
 type Acidente = {
-  id: number;
   titulo: string;
   tipo: string;
   situacao: string;
   data: string;
   horario: string;
   descricao: string;
+  resolucao: {
+    responsavel: string;
+    data: string;
+    descricao: string;
+    custo_total: number;
+  };
 };
 
 export default function FormIncidente() {
-  const [novoAcidente, setNovoAcidente] = useState<Partial<Acidente>>({
+  const [novoAcidente, setNovoAcidente] = useState<Acidente>({
+    titulo: "",
     tipo: "Segurança",
+    situacao: "Aberto", 
+    data: "",
+    horario: "",
+    descricao: "",
+    resolucao: {
+      responsavel: "Nome",
+      data: "2000-01-01",
+      descricao: "Descrição.",
+      custo_total: 0,
+    },
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setNovoAcidente((prev) => ({ ...prev, [name]: value }));
+    setNovoAcidente({
+      ...novoAcidente,
+      [name]: value,
+    });
   };
 
-  const handleAddAcidente = (e: React.FormEvent) => {
+  const handleAddAcidente = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (
-      novoAcidente.titulo &&
-      novoAcidente.tipo &&
-      novoAcidente.data &&
-      novoAcidente.horario &&
-      novoAcidente.descricao
-    ) {
-   
-      console.log("Acidente cadastrado:", novoAcidente);
-      setNovoAcidente({ tipo: "Segurança" });
+  
+    try {
+      const response = await fetch("http://localhost:3000/acidente", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(novoAcidente),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erro ao cadastrar o acidente");
+      }
+  
+      alert("Acidente cadastrado com sucesso!");
+      setNovoAcidente({
+        titulo: "",
+        tipo: "Segurança",
+        situacao: "ABERTO",
+        data: "",
+        horario: "",
+        descricao: "",
+        resolucao: {
+          responsavel: "Nome",
+          data: "2000-01-01",
+          descricao: "Descrição.",
+          custo_total: 0,
+        },
+      }); 
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message); 
+      } else {
+        alert("Erro desconhecido ao cadastrar o acidente");
+      }
     }
   };
-
+  
   return (
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col space-y-6 overflow-y-auto">
       {/* Formulário */}
@@ -45,7 +88,7 @@ export default function FormIncidente() {
           <input
             type="text"
             name="titulo"
-            value={novoAcidente.titulo || ""}
+            value={novoAcidente.titulo}
             onChange={handleInputChange}
             className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
@@ -56,7 +99,7 @@ export default function FormIncidente() {
           <label className="font-semibold">Tipo</label>
           <select
             name="tipo"
-            value={novoAcidente.tipo || "Segurança"}
+            value={novoAcidente.tipo}
             onChange={handleInputChange}
             className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
@@ -71,7 +114,7 @@ export default function FormIncidente() {
           <input
             type="date"
             name="data"
-            value={novoAcidente.data || ""}
+            value={novoAcidente.data}
             onChange={handleInputChange}
             className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
@@ -83,7 +126,7 @@ export default function FormIncidente() {
           <input
             type="time"
             name="horario"
-            value={novoAcidente.horario || ""}
+            value={novoAcidente.horario}
             onChange={handleInputChange}
             className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             required
@@ -94,7 +137,7 @@ export default function FormIncidente() {
           <label className="font-semibold">Descrição</label>
           <textarea
             name="descricao"
-            value={novoAcidente.descricao || ""}
+            value={novoAcidente.descricao}
             onChange={handleInputChange}
             className="p-2 border border-gray-400 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             rows={4}
