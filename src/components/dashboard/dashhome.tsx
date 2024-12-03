@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Ambiental from "./ambiental";
 import Seguranca from "./seguranca";
 import Clima from "./clima";
-import { incidentes } from "../data/index";
 import { GraficoCustos } from '../relatorios/grafico';
 import { noticias } from '../data/noticias';
 
@@ -53,6 +52,8 @@ const ultimasNoticias = noticias
 
 export default function Dashhome() {
   const [lastUpdate, setLastUpdate] = useState<string>(new Date().toLocaleString());
+  const [incidentes, setIncidentes] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Atualiza a data e hora a cada 30 minutos
   useEffect(() => {
@@ -94,6 +95,29 @@ export default function Dashhome() {
       custosPorMes[mes] += custoTotal;
     }
   });
+
+  useEffect(() => {
+    const fetchIncidentes = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/acidente");
+        if (!response.ok) {
+          throw new Error("Erro ao buscar os dados");
+        }
+        const data = await response.json();
+        setIncidentes(data);
+      } catch (error) {
+        console.error("Erro:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchIncidentes();
+  }, []);
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
 
   return (
     <div className="bg-[#94A3B8] h-[100%] p-12 flex flex-col md:flex-row space-x-12 overflow-y-auto">
