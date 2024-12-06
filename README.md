@@ -1,4 +1,4 @@
-# Deep Blue - Frontend (Em construção)
+# Deep Blue - Frontend
 
 O projeto DeepBlue é uma plataforma avançada voltada para grandes empresas do setor petrolífero, com foco no monitoramento de incidentes ambientais e acidentes de trabalho em plataformas offshore. A plataforma visa transformar dados complexos em informações acessíveis e acionáveis, através de um dashboard dinâmico e interativo.  
 A solução é projetada para otimizar práticas de ESG (Governança Ambiental, Social e Corporativa), com insights que ajudam a reduzir impactos ambientais e operacionais, oferecendo às empresas uma abordagem proativa na gestão de riscos.
