@@ -191,7 +191,7 @@ export default function ListaAcidentes() {
             {/* Mostrar botão de adicionar resolução se a situação for "Aberto" */}
             {acidenteSelecionado.situacao === "Aberto" && (
               <button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md mr-3"
                 onClick={() => setMostrarResolucao(!mostrarResolucao)}
               >
                 {mostrarResolucao ? "Fechar Resolução" : "Adicionar Resolução"}
