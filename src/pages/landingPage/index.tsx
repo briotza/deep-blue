@@ -21,7 +21,7 @@ export default function LandingPage() {
                         <div className="text-3xl font-bold">Deep Blue</div>
                     </div>
                     <nav className="space-x-4 text-xl hidden md:block">
-                        <a href="#" className="hover:underline">HOME</a>
+                        <Link to='/home'><a href="#" className="hover:underline">HOME</a></Link>
                         <a href="#" className="hover:underline">SOBRE NÓS</a>
                         <a href="#" className="hover:underline">CONTATO</a>
                     </nav>
