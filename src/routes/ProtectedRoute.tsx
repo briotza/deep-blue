@@ -11,7 +11,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element, ...rest }) => 
   const { user } = useAuth(); 
 
   if (!user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/home" />;
   }
 
   return <>{element}</>;

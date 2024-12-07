@@ -8,12 +8,14 @@ import FormularioIncidentes from "../pages/formularioIncidente";
 import Notificacoes from "../pages/notificacoes";
 import Perfil from "../pages/perfil";
 import ProtectedRoute from "./ProtectedRoute"; 
+import LandingPage from "../pages/landingPage";
 
 export default function WebRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<Home />} />
 
         {/* Rotas protegidas */}
         <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
